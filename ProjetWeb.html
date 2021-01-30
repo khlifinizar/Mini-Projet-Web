@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mini-Projet</title>
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <script>
+        var xhr=new XMLHttpRequest();
+        function charger(){
+            xhr.open("GET","https://appessat707.000webhostapp.com/pfes.php",true);
+            xhr.send();
+            xhr.onreadystatechange=function () {
+                if(xhr.readyState==4 && xhr.status==200){
+                    remplir(xhr.responseXML);
+                }
+            }
+        }
+        function charger_pfe(el){
+            xhr.open("GET","https://appessat707.000webhostapp.com/pfes.php\n",true);
+            xhr.send();
+            xhr.onreadystatechange=function () {
+                if(xhr.readyState==4 && xhr.status==200){
+                    remplir(xhr.responseXML);
+                }
+            }
+            resetElements();
+            console.log(el.innerHTML);
+            el.classList.add('active');
+        }
+        function charger_reseaux(el){
+            xhr.open("GET","https://appessat707.000webhostapp.com/pfespartypes.php?type=reseaux",true);
+            xhr.send();
+            xhr.onreadystatechange=function () {
+                if(xhr.readyState==4 && xhr.status==200){
+                    remplir(xhr.responseXML);
+                }
+            }
+            resetElements();
+            console.log(el.innerHTML);
+            el.classList.add('active');
+        }
+        function charger_embarque(el){
+            xhr.open("GET","https://appessat707.000webhostapp.com/pfespartypes.php?type=Embarques et IoT",true);
+            xhr.send();
+            xhr.onreadystatechange=function () {
+                if(xhr.readyState==4 && xhr.status==200){
+                    remplir(xhr.responseXML);
+                }
+            }
+            resetElements();
+            console.log(el.innerHTML);
+            el.classList.add('active');
+        }
+        function charger_telecom(el){
+            xhr.open("GET","https://appessat707.000webhostapp.com/pfespartypes.php?type=Telecom\n",true);
+            xhr.send();
+            xhr.onreadystatechange=function () {
+                if(xhr.readyState==4 && xhr.status==200){
+                    remplir(xhr.responseXML);
+                }
+            }
+            resetElements();
+            console.log(el.innerHTML);
+            el.classList.add('active');
+        }
+        function charger_dev(el){
+            xhr.open("GET","https://appessat707.000webhostapp.com/pfespartypes.php?type=Developpement",true);
+            xhr.send();
+            xhr.onreadystatechange=function () {
+                if(xhr.readyState==4 && xhr.status==200){
+                    remplir(xhr.responseXML);
+                }
+            }
+            resetElements();
+            console.log(el.innerHTML);
+            el.classList.add('active');
+        }
+        function resetElements() {
+            // Get all elements with "active" class
+            var els = document.getElementsByClassName("active");
+            // Loop over Elements to remove active class;
+            for (var i = 0; i < els.length; i++) {
+                els[i].classList.remove('active')
+            }
+        }
+        function remplir(n){
+            var tab=document.getElementById("tbody");
+            var ele=n.getElementsByTagName("pfe");
+            tab.innerHTML="";
+            for(var i=0;i<ele.length;i++){
+                var tr=document.createElement("tr");
+                var td1=document.createElement("td");
+                var c1=document.createTextNode(ele[i].getAttribute("id"));
+                td1.appendChild(c1);
+                tr.appendChild(td1);
+                var td2=document.createElement("td");
+                var c2=document.createTextNode(ele[i].getAttribute("titre"));
+                td2.appendChild(c2);
+                tr.appendChild(td2);
+                var td3=document.createElement("td");
+                var c3=document.createTextNode(ele[i].getAttribute("type"));
+                td3.appendChild(c3);
+                tr.appendChild(td3);
+                tab.appendChild(tr);
+            }
+        }
+    </script>
+</head>
+<body onload="charger()">
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h1>Catalogue des PFEs (ESSAT)</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-3">
+            <div class="list-group">
+                <li class="list-group-item list-group-item-action active" onclick="charger_pfe(this)"><i class="fas fa-th-large"></i> Tous les PFEs <span
+                        class="badge badge-pill badge-warning"> 13 </span></li>
+                <li class="list-group-item list-group-item-action" onclick="charger_telecom(this)"><i class="fas fa-th-large"></i> PFEs Telecom <span
+                        class="badge badge-pill badge-primary"> 3 </span></li>
+                <li class="list-group-item list-group-item-action" onclick="charger_dev(this)"><i class="fas fa-th-large"></i> PFEs Developpement<span
+                        class="badge badge-pill badge-primary"> 4 </span></li>
+                <li class="list-group-item list-group-item-action" onclick="charger_reseaux(this)"><i class="fas fa-th-large"></i> PFEs Reseaux<span
+                        class="badge badge-pill badge-primary"> 3 </span></li>
+                <li class="list-group-item list-group-item-action" onclick="charger_embarque(this)"><i class="fas fa-th-large"></i> PFEs Embarques et IoT<span
+                        class="badge badge-pill badge-primary"> 3 </span></li>
+            </div>
+        </div>
+        <div class="col-9">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    Liste des PFEs
+                </div>
+            </div>
+            <table class="table table-hover table-border" id="tab">
+                <thead class="thead-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Titre</th>
+                    <th>Type</th>
+                </tr>
+                </thead>
+                <tbody id="tbody">
+                </tbody>
+        </div>
+    </div>
+</div>
+</body>
+</html>
